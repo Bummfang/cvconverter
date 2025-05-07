@@ -13,13 +13,15 @@ export default function ImageConverter() {
     const file = acceptedFiles[0];
     if (!file) return;
 
-    const options = {
-      maxSizeMB: 5,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-      fileType: 'image/webp',
-      initialQuality: quality / 100,
-    };
+const options = {
+  maxSizeMB: 5,
+  maxWidthOrHeight: 1920, // erzwingt Resize
+  useWebWorker: true,
+  fileType: 'image/webp',
+  initialQuality: quality / 100,
+  alwaysKeepResolution: false, // wichtig
+};
+
 
     try {
       setIsLoading(true);
@@ -40,6 +42,7 @@ export default function ImageConverter() {
 
   return (
     <div className='w-full h-screen bg-black'>
+      <p className='text-[#5c5c5c] font-bold text-[2rem] text-center pt-10'>Cottbusverkehr Picture Converter</p>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -57,7 +60,7 @@ export default function ImageConverter() {
       >
         <input {...getInputProps()} />
         <p className="text-orange-300 font-medium">
-          {isDragActive ? '📂 Datei hier ablegen …' : '🖼️ Ziehe dein Bild hierher oder klicke zum Hochladen'}
+          {isDragActive ? '📂 Datei hier ablegen …' : 'Ziehe dein Bild hierher oder klicke zum Hochladen'}
         </p>
         <p className="text-xs text-gray-400 mt-2">Unterstützt: .jpg, .jpeg, .png → .webp</p>
       </motion.div>
@@ -66,6 +69,9 @@ export default function ImageConverter() {
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Kompressionsrate: <span className="font-bold text-orange-400">{quality}%</span>
         </label>
+
+        
+        <p className=''></p>
         <motion.input
           type="range"
           min="10"
