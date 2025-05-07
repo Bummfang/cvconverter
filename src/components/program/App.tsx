@@ -94,7 +94,7 @@ export default function ImageConverter() {
 
   return (
     <div className='w-full min-h-screen bg-black text-white'>
-      <p className='text-[#5c5c5c] font-bold text-[2rem] text-center pt-10'>Cottbusverkehr Picture Converter</p>
+      <p className='text-[#5c5c5c] font-bold text-[2rem] text-center pt-10'>Cottbusverkehr Bildkonverter</p>
 
       <div className="p-6 max-w-4xl mx-auto">
         <div {...getRootProps()}>
