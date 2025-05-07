@@ -161,7 +161,8 @@ export default function ImageConverter() {
             {img.status === 'done' && img.convertedURL && (
               <a
                 href={img.convertedURL}
-                download={`converted-${img.file.name}.webp`}
+                download={`converted-${img.file.name.replace(/\.[^/.]+$/, '')}.webp`}
+
                 className="mt-3 inline-block bg-orange-500 hover:bg-orange-600 transition-colors text-white font-semibold py-2 px-5 rounded-xl shadow-lg"
               >
                 WebP herunterladen
@@ -198,7 +199,7 @@ export default function ImageConverter() {
                       <td className="px-4 py-2">
                         <a
                           href={entry.url}
-                          download={`converted-${index}.webp`}
+                          download={`converted-${entry.name.replace(/\.[^/.]+$/, '')}.webp`}
                           className="text-orange-400 hover:underline"
                         >
                           ⬇️
