@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import imageCompression from 'browser-image-compression';
 import { useDropzone } from 'react-dropzone';
 
@@ -118,7 +118,7 @@ export default function ImageConverter() {
           <>
             <div className="mt-6">
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Kompressionsrate: <span className="font-bold text-orange-400">{quality}%</span>
+                Qualität: <span className="font-bold text-orange-400">{quality}%</span>
               </label>
               <motion.input
                 type="range"
@@ -126,7 +126,6 @@ export default function ImageConverter() {
                 max="100"
                 value={quality}
                 onChange={(e) => setQuality(Number(e.target.value))}
-                whileHover={{ scale: 1.01 }}
                 className="w-full accent-orange-500"
               />
             </div>
