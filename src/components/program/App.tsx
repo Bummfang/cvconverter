@@ -114,7 +114,8 @@ export default function ImageConverter() {
               : 'border-gray-600 bg-gray-800 hover:bg-gray-700/50'
               }`}
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} /> 
+
             <p className="text-orange-300 font-medium">
               {isDragActive ? '📂 Dateien hier ablegen …' : 'Ziehe deine Bilder hierher oder klicke zum Hochladen'}
             </p>
