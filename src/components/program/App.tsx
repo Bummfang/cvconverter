@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import imageCompression from 'browser-image-compression';
 import { useDropzone } from 'react-dropzone';
 
+
 type ImageItem = {
   file: File;
   id: string;
@@ -28,6 +29,13 @@ export default function ImageConverter() {
     }));
     setImages((prev) => [...prev, ...newItems]);
   };
+
+  const clearAll = () => {
+    setImages([]);
+    setHistory([]);
+  }
+
+
 
   const compressAllImages = async () => {
     const updated = [...images];
@@ -114,7 +122,7 @@ export default function ImageConverter() {
           </motion.div>
         </div>
 
-        {images.length > 0 && (
+        {images.length > 0 ? (
           <>
             <div className="mt-6">
               <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -134,12 +142,24 @@ export default function ImageConverter() {
               onClick={compressAllImages}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="mt-6 w-full bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-xl font-semibold shadow-lg"
+              className="mt-6 w-full bg-orange-600 hover:cursor-pointer hover:bg-orange-700 text-white py-2 rounded-xl font-semibold shadow-lg"
             >
               Alle Bilder komprimieren
             </motion.button>
+
+            {/*clear button*/}
+            <div className='w-full mt-5 flex justify-center items-center'>
+            <motion.button
+              onClick={clearAll}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="mt-6 w-[10rem] bg-orange-600 hover:cursor-pointer hover:bg-orange-700 text-white py-2 rounded-xl font-semibold shadow-lg"
+            >
+              Säubern
+            </motion.button>
+            </div>
           </>
-        )}
+        ):<p className='w-full text-center mt-10 text-gray-500 font-bold'>Keine Bilder erkannt</p>}
 
         {images.map((img) => (
           <div key={img.id} className="mt-6 border border-gray-700 rounded-lg p-4 bg-gray-800">
