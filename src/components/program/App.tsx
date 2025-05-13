@@ -3,16 +3,17 @@ import { motion } from 'framer-motion';
 import PictureMode from '../PictureMode';
 import VideoMode from '../VideoMode';
 
-
-
-
 export default function ImageConverter() {
-
   const [mode, setMode] = useState<'none' | 'image' | 'video'>('video');
-
   const backToMenu = () => setMode('none');
 
-
+// Hauptkomponent wird in 3 Sequencen unterteilt und anhand eines states evalluiert welcher komponent gerendert werden soll. 
+// es existieren die zustände 'none' | 'image' | 'video'
+// bei image wird nur der Bildkonverter gerendert aber nicht der video konverter
+// bei video wird nur der Videokonverter gerendert aber nicht der bild konverter
+// bei none wird werder der eine noch der andere komponent gerendert 
+// sondern eine schlichte auswahlt mit 2 möglichkeiten gerendert. entwerder schaltet man das programm damit in den video oder in den bildmodes.
+// man kommt aus beiden zuständen wieder zurück zur Auswahl wo man sich jeweils für einen modi entscheiden kann
   return (
     <div className='w-full min-h-screen bg-black text-white'>
       {mode === 'none' && (

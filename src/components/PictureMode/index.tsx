@@ -5,6 +5,9 @@ import imageCompression from 'browser-image-compression';
 import { useDropzone } from 'react-dropzone';
 
 
+
+
+// neuer typ für die bilder und dazügehörigen meta tags mit informationen
 type ImageItem = {
     file: File;
     id: string;
@@ -18,8 +21,14 @@ type ImageItem = {
 
 
 
-const PictureMode = (props:{
-    mode:()=>void;
+
+
+
+const PictureMode = (props: {
+   // funktionschild um den Zustand an das Kindelement zu übertragen 
+   // allerdings Ursprünglich in der Main deklariert und als zustand 
+   // und void manipulation an das Kindelement übertragen
+    mode: () => void;
 }) => {
     const [images, setImages] = useState<ImageItem[]>([]);
     const [quality, setQuality] = useState(80);
@@ -41,7 +50,7 @@ const PictureMode = (props:{
     }
 
 
-
+    // compressionsvorgang für die quallitätseinstellung und anpassung der kompressionsrate und dessen quallitative einschränkung
     const compressAllImages = async () => {
         const updated = [...images];
 
@@ -63,6 +72,7 @@ const PictureMode = (props:{
                     },
                 };
 
+                // try catch block für die exceptin das das bild nicht korrekt komprimiert wurde. ein Fallback wird in diesem Fall ausgegeben
                 try {
                     const compressed = await imageCompression(img.file, options);
                     const url = URL.createObjectURL(compressed);
@@ -95,19 +105,31 @@ const PictureMode = (props:{
         );
     };
 
+
+
+
+
+// anzeige für die geschätzte größe mit 98% übereinstimmung
     const formatSize = (bytes: number | undefined) => {
         return bytes !== undefined ? (bytes / 1024).toFixed(2) + ' KB' : '–';
     };
 
+    // die logik der drag and drop zone damit nur valide bilddateien als eingabe genutzt werden können
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: { 'image/*': ['.jpg', '.jpeg', '.png'] },
         multiple: true,
     });
+
+
+
+
+
+// beginn komponent wird 
     return (
         <>
-            <p className='font-bold text-[2rem] text-center text-orange-600 pt-10'>🖼️Bildkonverter</p>
 
+            <p className='font-bold text-[2rem] text-center text-orange-600 pt-10'>🖼️Bildkonverter</p>
             <div className="p-6 max-w-4xl mx-auto">
                 <div {...getRootProps()}>
                     <motion.div
@@ -127,18 +149,22 @@ const PictureMode = (props:{
                     </motion.div>
                 </div>
                 <div className='w-full flex justify-center item-center'>
-                <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => props.mode()}
-                onClickCapture={props.mode}
-                className="mt-6 bg-orange-600 hover:cursor-pointer hover:bg-gray-600 text-white py-2 px-4 rounded-xl"
-            >
-                Zurück zur Auswahl
-            </motion.button>
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => props.mode()}
+                        onClickCapture={props.mode}
+                        className="mt-6 bg-orange-600 hover:cursor-pointer hover:bg-gray-600 text-white py-2 px-4 rounded-xl"
+                    >
+                        Zurück zur Auswahl
+                    </motion.button>
                 </div>
 
 
+
+                {/**Konverter wird nur angezeigt wenn sein Bildstack mit mindestens ein Bild 
+ * gefüllt ist ansonster gibt das Programm den Nutzer einen Hinweis das kein 
+ * Bild erkannt wurde*/}
                 {images.length > 0 ? (
                     <>
                         <div className="mt-6">
@@ -177,7 +203,8 @@ const PictureMode = (props:{
                         </div>
                     </>
                 ) : <p className='w-full text-center mt-10 text-gray-500 font-bold'>Keine Bilder erkannt</p>}
-
+                {/** Hier wird mit der Map funktion jedes reingeladene bild gerendert. Die items werden aus einen stack gezogen und anschließend 
+                 * in das forma gerendert. hier ist auch bildausgangquallität, erwartete kompressionsrate und die geschätze kompressionsdauer aufgeführt */}
                 {images.map((img) => (
                     <div key={img.id} className="mt-6 border border-gray-700 rounded-lg p-4 bg-gray-800">
                         <p><strong>Dateiname:</strong> {img.file.name}</p>
@@ -214,7 +241,10 @@ const PictureMode = (props:{
                 ))}
 
 
-                {/* Historie */}
+
+
+                {/* Historie wird nur angezeigt wenn sich mindestens ein Eintrag im 
+                HistorieStack befindet ansonsten hidden*/}
                 {history.length > 0 && (
                     <div className="mt-10">
                         <h2 className="text-orange-400 text-lg font-semibold mb-4 text-center">🕓 Upload-Historie</h2>
@@ -230,6 +260,8 @@ const PictureMode = (props:{
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                    {/**Über die Map Funktion werden alle Elemente aus dem Stack gerendert. Danmit sind die Historie Elementer der Menge Historie gemeint */}
                                     {history.map((entry, index) => (
                                         <tr key={index} className="border-t border-gray-700 hover:bg-gray-800 transition">
                                             <td className="px-4 py-2">{entry.name}</td>

@@ -5,6 +5,8 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 const VideoMode = (props: {
     mode: () => void;
 }) => {
+
+    // absolut work in progress
     return (
         <div className="flex flex-col items-center justify-center min-h-screen text-center">
             <p className="text-[2rem] text-purple-400 font-bold mb-4">🎬 Videokonverter</p>
